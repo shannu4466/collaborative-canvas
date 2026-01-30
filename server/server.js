@@ -41,12 +41,15 @@ io.on('connection', (socket) => {
     });
 
     socket.on('cursor_move', (data) => {
+        const user = users[socket.id];
+        if (!user) return;
+
         socket.broadcast.emit('cursor_update', {
             id: socket.id,
             x: data.x,
             y: data.y,
-            name: users[socket.id].name,
-            color: users[socket.id].color
+            name: user.name,
+            color: user.color
         });
     });
 
